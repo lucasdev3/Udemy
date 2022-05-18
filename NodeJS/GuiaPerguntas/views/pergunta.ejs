@@ -1,0 +1,41 @@
+<%- include('partials/head.ejs') %>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<body>
+    <%- include('partials/navbar.ejs') %>
+    <div class="container">
+        <div class="card">
+            <div class="card-title">
+                <h1><%= pergunta.titulo %></h1>
+            </div>
+            <div class="card-body">
+                <h3><%= pergunta.descricao %></h3>
+            </div>
+            <div class="card-footer" id="content_form">
+                <div class="card-body">
+                    <form action="/cadastrar-resposta/<%= pergunta.id %>" method="POST">
+
+                        <label for="descricao" class="card-title">Descrição</label>
+                        <textarea type="text" placeholder="Descreva sua pergunta aqui" name="descricao" class="form-control" id="descricao"></textarea>
+                        
+                        <button class="btn btn-success" id='buttonEnviarResponder'>Enviar Resposta</button>
+                        
+                    </form>
+                </div>
+                <div class="card-body">
+                    
+                    <h3>Respostas</h3>
+                    <% resposta.forEach((item) => { %> 
+                        <div class="card-body">
+                            <br>
+                            <p><%= item.corpo %></p>
+                            <p><%= item.createdAt %></p>
+                            <br>
+                        </div>
+                    <% }) %>
+                </div>
+            </div>
+        </div>
+    </div>
+    <%- include('partials/footer.ejs') %>
+    <script src="/js/pergunta.js"></script>
+</body>

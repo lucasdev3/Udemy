@@ -1,0 +1,12 @@
+body {
+    background-color: #ECEFF1;
+}
+
+#formularioPergunta {
+    margin-top: 5vh;
+}
+
+.btn {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
