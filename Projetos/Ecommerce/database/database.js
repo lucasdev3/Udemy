@@ -1,6 +1,6 @@
 const Sequelize = require('sequelize');
-const connection = new Sequelize('u202105582_ecommerce', 'u202105582_ecommerce', 'Friend@21', {
-    host: '194.195.84.103',
+const connection = new Sequelize('ecommerce', 'root', '1234', {
+    host: '127.0.0.1',
     port: 3306,
     dialect: 'mysql',
     pool: {
