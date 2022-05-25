@@ -12,7 +12,7 @@
                 <br>
                 <textarea name="body" id="article" class="form-control"></textarea>
                 <br>
-                <label>Categoria:</label>
+                <label class="form-label">Categoria:</label>
                 <select name="category" id="category" class="form-control">
                     <% for(let category of categories) { %>
                         <option value="<%= category.id %>"><%= category.title %></option>

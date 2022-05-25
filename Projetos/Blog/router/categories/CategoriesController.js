@@ -11,8 +11,6 @@ router.get('/admin/categories', (req, res) => {
         .then((categories) => {
             res.render('admin/categories/index', {categories: categories});
         })
-
-    
 })
 
 router.get('/admin/categories/new', (req, res) => {
@@ -59,8 +57,6 @@ router.post('/categories/save', (req, res) => {
 
 router.post('/categories/delete', (req, res) => {
     const { id } = req.body;
-
-    console.log(id)
 
     if(id) {
         if(!isNaN(id)) {

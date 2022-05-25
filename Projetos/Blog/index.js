@@ -1,15 +1,7 @@
 const express  = require('express');
-
 const db = require('./database/database');
-
-const categoriesController = require('./router/categories/CategoriesController');
-const articlesController = require('./router/articles/ArticlesController');
-
-const Article = require('./router/articles/Article');
-const Category = require('./router/categories/Category');
-
 const server = express();
-
+const homeControllers = require('./router/home/homeControllers');
 const port = process.env.PORT || 3001;
 
 // VIEWS
@@ -35,14 +27,7 @@ db.authenticate()
         console.log(error);
     })
 
-
-server.use('/', categoriesController);
-server.use('/', articlesController);
-
-
-server.get('/', (req, res) => {
-    res.status(200).render('index');
-});
+server.use(homeControllers);
 
 server.listen(port, () => {
     console.log("Server is running on port " + port);

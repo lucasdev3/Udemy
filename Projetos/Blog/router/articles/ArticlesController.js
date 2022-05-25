@@ -10,7 +10,6 @@ router.get('/admin/articles', (req, res) => {
         include: [{model: Category}]
     })
         .then((articles) => {
-            console.log(articles[0].dataValues.category);
             res.render('admin/articles/index.ejs', {articles: articles});
         })
 })
@@ -39,6 +38,27 @@ router.post('/articles/save', (req, res) => {
 
     }else {
         res.redirect('/admin/articles/new');
+    }
+})
+
+router.post('/articles/delete', (req, res) => {
+    const { id } = req.body;
+
+    if(id) {
+        if(!isNaN(id)) {
+            Article.destroy({
+                where: {
+                    id: id
+                }
+            })
+                .then(() => {
+                    res.redirect('/admin/articles');
+                })
+        } else {
+            res.redirect('/admin/articles');
+        }
+    } else {
+        res.redirect('/admin/articles');
     }
 })
 
