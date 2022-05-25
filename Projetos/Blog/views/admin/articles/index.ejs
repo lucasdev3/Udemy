@@ -1,0 +1,51 @@
+<%- include('../../partials/head.ejs') %>
+<%- include('../../partials/navbar.ejs') %>
+
+
+<body>
+    
+    <div class="container">
+        <hr>
+        <h2>Artigos</h2>
+        <a href="/admin/articles/new" class="btn btn-success">Criar novo Artigo</a>
+        <hr>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Titulo</th>
+                    <th>Slug</th>
+                    <th>Categoria</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% for(let article of articles) { %>
+                    <tr>
+                        <td><%= article.id %></td>
+                        <td><%= article.title %></td>
+                        <td><%= article.slug %></td>
+                        <td><%= article.category.title %></td>
+                        <td></td>
+                    </tr>                
+                <% } %>
+            </tbody>
+        </table>
+    </div>
+
+</body>
+
+<%- include('../../partials/scripts.ejs') %>
+<script>
+
+    const form = document.getElementById('form-delete');
+
+    function confirmarDelecao(event) {
+        const decision = confirm("Você quer deletar esta categoria?");
+        if(!decision) {
+            event.preventDefault();
+        }
+    }
+
+    form.addEventListener('submit', confirmarDelecao);
+</script>
