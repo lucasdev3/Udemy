@@ -56,6 +56,7 @@ router.post('/categories/save', (req, res) => {
     }
 })
 
+
 router.post('/categories/delete', (req, res) => {
     const { id } = req.body;
 
