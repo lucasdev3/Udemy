@@ -22,6 +22,27 @@ router.get('/admin/articles/new', (req, res) => {
     
 })
 
+router.get('/admin/articles/edit/:id', (req, res) => {
+    const { id } = req.params;
+    Article.findByPk(id)
+        .then((article) => {
+            if(article) {
+
+                Category.findAll()
+                    .then((categories) => {
+                        res.render('admin/articles/edit', {categories: categories})
+                    })
+            }else {
+                res.redirect('/');
+            }
+        })
+        .catch((error) => {
+            res.redirect('/');
+        })
+})
+
+// POST
+
 router.post('/articles/save', (req, res) => {
     const { title, body, category } = req.body;
     if (title) {
@@ -61,6 +82,7 @@ router.post('/articles/delete', (req, res) => {
         res.redirect('/admin/articles');
     }
 })
+
 
 
 
