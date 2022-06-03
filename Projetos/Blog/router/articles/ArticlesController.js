@@ -19,20 +19,20 @@ router.get('/admin/articles/new', (req, res) => {
         .then((categories) => {
             res.render('admin/articles/new', {categories: categories})
         })
-    
+
 })
 
 router.get('/admin/articles/edit/:id', (req, res) => {
-    const { id } = req.params;
+    const {id} = req.params;
     Article.findByPk(id)
         .then((article) => {
-            if(article) {
+            if (article) {
 
                 Category.findAll()
                     .then((categories) => {
-                        res.render('admin/articles/edit', {categories: categories})
+                        res.render('admin/articles/edit', {categories: categories, article: article})
                     })
-            }else {
+            } else {
                 res.redirect('/');
             }
         })
@@ -44,7 +44,7 @@ router.get('/admin/articles/edit/:id', (req, res) => {
 // POST
 
 router.post('/articles/save', (req, res) => {
-    const { title, body, category } = req.body;
+    const {title, body, category} = req.body;
     if (title) {
 
         Article.create({
@@ -57,16 +57,16 @@ router.post('/articles/save', (req, res) => {
                 res.redirect('/admin/articles');
             })
 
-    }else {
+    } else {
         res.redirect('/admin/articles/new');
     }
 })
 
 router.post('/articles/delete', (req, res) => {
-    const { id } = req.body;
+    const {id} = req.body;
 
-    if(id) {
-        if(!isNaN(id)) {
+    if (id) {
+        if (!isNaN(id)) {
             Article.destroy({
                 where: {
                     id: id
@@ -83,7 +83,29 @@ router.post('/articles/delete', (req, res) => {
     }
 })
 
+router.post('/articles/update', (req, res) => {
+    const {id, title, body, category} = req.body;
 
+    Article.update(
+        {
+            title: title,
+            body: body,
+            category: category,
+            slug: slugify(title)
+        },
+        {
+            where: {
+                id: id
+            }
+        }
+    )
+        .then(() => {
+            return res.status(200).redirect('/admin/articles')
+        })
+        .catch((error) => {
+            return res.status(400).redirect('/');
+        })
+})
 
 
 module.exports = router;

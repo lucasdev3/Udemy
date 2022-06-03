@@ -26,30 +26,35 @@ router.get('/', (req, res) => {
                     res.status(200).render('index', {articles: articles, categories: categories});
                 })
         })
+        .catch((error) => {
+            console.log(error)
+        })
 });
 
-router.get('/:slug', (req, res) => {
+router.get('/:id', (req, res) => {
 
-    const { slug } = req.params;
+    const { id } = req.params;
 
     Article.findOne({
         where: {
-            slug: slug
+            id: id
         }
     })
-        .then((article) => {
-            console.log("SLUG " + slug)
-            if (article) {
+        .then((articles) => {
+            console.log("ID " + id)
+            if (articles) {
                 Category.findAll()
-                console.log(article)
+                // console.log(article)
                 .then((categories) => {
-                    res.status(200).render('index', {articles: article, categories: categories});
+                    return res.status(200).render('articles', {articles: articles, categories: categories});
                 })
             }else {
+                console.log("Deu ruim")
                 res.redirect('/');
             }
         })
         .catch((error) => {
+            console.log(error);
             res.redirect('/');
         })
 })
@@ -67,7 +72,7 @@ router.get('/category/:slug', (req, res) => {
             if(category) {
                 Category.findAll()
                     .then((categories) => {
-                        res.render('index', {articles: category.articles, categories: categories});
+                        return res.render('index', {articles: category.articles, categories: categories});
                     })
             } else {
                 res.redirect('/');
