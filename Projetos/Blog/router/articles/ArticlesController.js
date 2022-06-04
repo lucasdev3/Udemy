@@ -56,7 +56,6 @@ router.post('/articles/save', (req, res) => {
             .then(() => {
                 res.redirect('/admin/articles');
             })
-
     } else {
         res.redirect('/admin/articles/new');
     }
@@ -86,6 +85,8 @@ router.post('/articles/delete', (req, res) => {
 router.post('/articles/update', (req, res) => {
     const {id, title, body, category} = req.body;
 
+    console.log(title)
+
     Article.update(
         {
             title: title,
@@ -99,8 +100,10 @@ router.post('/articles/update', (req, res) => {
             }
         }
     )
-        .then(() => {
-            return res.status(200).redirect('/admin/articles')
+        .then((response) => {
+            console.log(response);
+            console.log('atualizado');
+            return res.status(200).redirect('/admin/articles');
         })
         .catch((error) => {
             return res.status(400).redirect('/');
