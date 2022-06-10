@@ -2,9 +2,10 @@
   <div :class="{'cliente': !this.isPremium, 'cliente-premium': this.isPremium}">
     <h4>Nome: {{ cliente.nome }}</h4>
     <p>Email: {{ cliente.email }}</p>
-    <p v-if="showIdade">Idade: {{ cliente.idade }}</p>
-    <p v-else>O usuario ocultou a idade</p>
+    <p>Idade: {{ cliente.idade }}</p>
+
     <button @click="mudarCor($event)">Mudar cor!</button>
+    <button @click="emitirEventoDelete">Deletar</button>
   </div>
 </template>
 
@@ -26,6 +27,19 @@ export default {
       console.log("chamando evento!");
       console.log($event)
       return this.isPremium = !this.isPremium
+    },
+    emitirEventoDelete: function () {
+      console.log("Emitindo do filho");
+      this.$emit("meDelete", {idCliente: this.cliente.id, curso:"Formação Node.js", emPromocao: true, component: this, isPremium: this.isPremium});
+    },
+    testar: function () {
+      console.log('testando ');
+      alert('Deletando usuario: ' + this.cliente.nome);
+    }
+  },
+  filters: {
+    processarEmail: function (value) {
+      return value.toUpperCase();
     }
   }
 }
